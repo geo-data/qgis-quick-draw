@@ -68,6 +68,9 @@ class QuickDraw:
         # the draw stack contains references to all items drawn by the plugin
         self.drawStack = []
 
+        # has the applied button been clicked?
+        self.applied = False
+
     def initGui(self):
         # Create action that will start plugin configuration
         self.action = QAction(
@@ -81,15 +84,47 @@ class QuickDraw:
         self.iface.addPluginToMenu(u"&Quick Draw", self.action)
 
         QObject.connect(self.dlg.clearButton, SIGNAL("clicked()"), self.clearButtonClicked)
-
-    def clearButtonClicked(self):
-        self.dlg.geometryTextEdit.setPlainText('')
+        self.dlg.buttonBox.clicked.connect(self.buttonBoxClicked)
 
     def unload(self):
         # Remove the plugin menu item and icon
         self.iface.removePluginMenu(u"&Quick Draw", self.action)
         self.iface.removeToolBarIcon(self.action)
         self.removeItems()
+
+    def buttonBoxClicked(self, button):
+        if str(button.text()) == 'Apply':
+            self.draw()
+            self.applied = True
+
+    def clearButtonClicked(self):
+        self.dlg.geometryTextEdit.setPlainText('')
+
+    def draw(self, checkZoom = True):
+        text = str(self.dlg.geometryTextEdit.toPlainText())
+
+        drawStack = []
+        for line in [l.strip() for l in text.splitlines()]:
+            if not line: continue
+
+            try:
+                geom = self.textToGeometry(line)
+                r = self.geometryToCanvas(geom)
+                r.show()
+                drawStack.append(r)
+            except QuickDrawError, e:
+                QMessageBox.warning(self.dlg, e.title, e.message)
+                self.removeItems(drawStack) # remove added items
+                return False
+
+        self.removeItems()  # remove previous items
+        self.drawStack = drawStack
+
+        # zoom to the geometries
+        if checkZoom and self.dlg.zoomCheckBox.isChecked():
+            self.zoomToItems()
+
+        return True
 
     # run method that performs all the real work
     def run(self):
@@ -102,30 +137,16 @@ class QuickDraw:
         result = self.dlg.exec_()
         # See if OK was pressed
         if result == 1:
-            text = str(self.dlg.geometryTextEdit.toPlainText())
-
-            drawStack = []
-            for line in [l.strip() for l in text.splitlines()]:
-                if not line: continue
-
-                try:
-                    geom = self.textToGeometry(line)
-                    r = self.geometryToCanvas(geom)
-                    r.show()
-                    drawStack.append(r)
-                except QuickDrawError, e:
-                    QMessageBox.warning(self.dlg, e.title, e.message)
-                    self.removeItems(drawStack) # remove added items
-                    return self.run() # try again
-
-            self.removeItems()  # remove previous items
-            self.drawStack = drawStack
-
-            if self.dlg.zoomCheckBox.isChecked():
-                self.zoomToItems()
+            if not self.draw():
+                return self.run() # try again
         else:
-            # cancel was pressed: ensure the text doesn't change
+            # cancel was pressed: ensure the text doesn't change...
             self.dlg.geometryTextEdit.setPlainText(text)
+
+            #...and ensure any apply operations are reverted
+            if self.applied:
+                self.draw(False)
+                self.applied = False
 
     def zoomToItems(self):
         def getBBOX(item):
