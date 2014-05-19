@@ -11,7 +11,7 @@
 [general]
 name=Quick Draw
 qgisMinimumVersion=2.0
-description=Draw a bounding box on the canvas
+description=Easily input and display simple geometries on the canvas
 version=0.1
 author=Homme Zwaagstra
 email=hrz@geodata.soton.ac.uk
@@ -24,7 +24,7 @@ email=hrz@geodata.soton.ac.uk
 # changelog=
 
 # tags are comma separated with spaces allowed
-tags=bbox draw canvas
+tags=geometry,geometries,point,polygon,polyline,bbox,bounding box,draw,canvas
 
 homepage=http://www.github.com/geo-data/qgis-quick-draw
 tracker=http://www.github.com/geo-data/qgis-quick-draw/issues
