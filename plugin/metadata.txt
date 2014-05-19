@@ -11,7 +11,7 @@
 [general]
 name=Quick Draw
 qgisMinimumVersion=2.0
-description=Easily input and display simple geometries on the canvas
+description=Easily input, edit and display simple geometries on the map canvas
 version=0.1
 author=Homme Zwaagstra
 email=hrz@geodata.soton.ac.uk
@@ -22,6 +22,9 @@ email=hrz@geodata.soton.ac.uk
 
 # Uncomment the following line and add your changelog entries:
 # changelog=
+
+# Quick Draw deals in vectors
+category=Vector
 
 # tags are comma separated with spaces allowed
 tags=geometry,geometries,point,polygon,polyline,bbox,bounding box,draw,canvas
@@ -35,4 +38,3 @@ experimental=True
 
 # deprecated flag (applies to the whole plugin, not just a single version
 deprecated=False
-
