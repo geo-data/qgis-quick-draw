@@ -39,7 +39,9 @@ Geometries can be input as **points**, **polylines**, **polygons** and
 **bounding boxes** in the following formats:
 
 **Points**: *x,y*
+
 **Polylines** and **polygons**: *x1,y1,x2,y2,x3,y3 etc.*
+
 **Bounding box**: *xmin,ymin : xmax,ymax*
 
 Coordinates are comma separated (whitespace is ignored). It is assumed that
@@ -55,6 +57,12 @@ used for the QGIS extents shown in the status bar.
 
 **Deleting** or **editing** geometries and pressing `OK` will update the
   canvas.
+
+### Help
+
+When using the plugin, clicking on the geometry text input box with the QGIS
+**What's this?** help tool will display the geometry editing information from
+the previous section.
 
 ## Installation from Source
 
