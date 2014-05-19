@@ -41,8 +41,6 @@ UI_FILES = ui_quickdraw.py
 
 RESOURCE_FILES = resources_rc.py
 
-HELP = help/build/html
-
 default: compile
 
 compile: $(UI_FILES) $(RESOURCE_FILES)
@@ -59,14 +57,13 @@ compile: $(UI_FILES) $(RESOURCE_FILES)
 # The deploy  target only works on unix like operating system where
 # the Python plugin directory is located at:
 # $HOME/$(QGISDIR)/python/plugins
-deploy: compile doc transcompile
+deploy: compile transcompile
 	mkdir -p $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vf $(PY_FILES) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vf $(UI_FILES) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vf $(RESOURCE_FILES) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vf $(EXTRAS) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vfr i18n $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
-	cp -vfr $(HELP) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)/help
 
 # The dclean target removes compiled python files from plugin directory
 # also delets any .svn entry
@@ -113,7 +110,3 @@ transclean:
 
 clean:
 	rm $(UI_FILES) $(RESOURCE_FILES)
-
-# build documentation with sphinx
-doc:
-	cd help; make html
