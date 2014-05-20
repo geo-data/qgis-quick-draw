@@ -66,7 +66,7 @@ the previous section.
 
 ## Installation from Source
 
-The recommended way to install the plugin is to the plugin manager as described
+The recommended way to install the plugin is to use the plugin manager as described
 above.  However, the plugin can be installed from source, which is useful if
 you want the very latest changes.  This method requires that you have GNU
 `make`, `pyrcc4` and `pyuic4` installed.
