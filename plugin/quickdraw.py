@@ -71,6 +71,9 @@ class QuickDraw:
         # has the applied button been clicked?
         self.applied = False
 
+        # should the geometry input text be cached
+        self._cache_text = True
+
     def initGui(self):
         # Create action that will start plugin configuration
         self.action = QAction(
@@ -93,9 +96,12 @@ class QuickDraw:
         self.removeItems()
 
     def buttonBoxClicked(self, button):
-        if str(button.text()) == 'Apply':
+        button_text = str(button.text())
+        if button_text == 'Apply':
             self.draw()
             self.applied = True
+        elif button_text == 'Reset':
+            self.resetText()
 
     def clearButtonClicked(self):
         self.dlg.geometryTextEdit.setPlainText('')
@@ -113,7 +119,8 @@ class QuickDraw:
                 r.show()
                 drawStack.append(r)
             except QuickDrawError, e:
-                QMessageBox.warning(self.dlg, e.title, e.message)
+                message = e.message + "\n\nUse the QGIS \"What's This?\" help tool to click on the text input box for information on how to correctly format geometries."
+                QMessageBox.warning(self.dlg, e.title, message)
                 self.removeItems(drawStack) # remove added items
                 return False
 
@@ -126,10 +133,14 @@ class QuickDraw:
 
         return True
 
+    def resetText(self):
+        self.dlg.geometryTextEdit.setPlainText(self.text)
+
     # run method that performs all the real work
     def run(self):
         # save the text so that it can be reverted in case of cancel
-        text = self.dlg.geometryTextEdit.toPlainText()
+        if self._cache_text:
+            self.text = self.dlg.geometryTextEdit.toPlainText()
 
         # show the dialog
         self.dlg.show()
@@ -138,10 +149,14 @@ class QuickDraw:
         # See if OK was pressed
         if result == 1:
             if not self.draw():
-                return self.run() # try again
+                # try again (without caching the bad text)
+                self._cache_text = False
+                self.run()
+                self._cache_text = True
+                return
         else:
             # cancel was pressed: ensure the text doesn't change...
-            self.dlg.geometryTextEdit.setPlainText(text)
+            self.resetText()
 
             #...and ensure any apply operations are reverted
             if self.applied:
