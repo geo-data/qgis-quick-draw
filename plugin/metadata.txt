@@ -11,7 +11,7 @@
 [general]
 name=Quick Draw
 qgisMinimumVersion=2.0
-description=Easily input, edit and display simple geometries on the map canvas
+description=Input simple geometries as text coordinates and display them on the map canvas.
 version=0.2
 author=Homme Zwaagstra
 email=hrz@geodata.soton.ac.uk

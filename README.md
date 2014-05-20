@@ -1,7 +1,7 @@
-# Quick Draw
+# Quick Draw ![icon](https://raw.githubusercontent.com/geo-data/qgis-quick-draw/master/plugin/icon.png "The Quick Draw icon")
 
-A [QGIS](http://www.qgis.org) plugin that allows users to input and display
-simple geometries on the map canvas.
+A [QGIS](http://www.qgis.org) plugin that allows users to input simple
+geometries as text coordinates and display them on the map canvas.
 
 Geometries are entered as coordinate strings and are rendered directly to the
 map canvas.  This makes the plugin suitable for quickly viewing bounding boxes,
@@ -10,8 +10,8 @@ points and lightweight lines and polygons.
 It is important to note that because the geometries are rendered directly to
 the map canvas they are *not* saved as layers or any other persistent format.
 Therefore when QGIS is closed or the plugin is de-activated the geometries
-disappear.  This means Quick Draw is suitable as a basic scratch editor and
-visualiser for geometries.
+disappear.  This means Quick Draw is most suitable as a quick and dirty scratch
+editor and visualiser for geometries.
 
 ## Usage
 
@@ -20,7 +20,7 @@ The plugin requires QGIS v2.0 or greater.
 1. Use the plugin manager to find and install the Quick Draw plugin from the
    QGIS plugins repository.
 
-2. Click on the Quick Draw toolbar icon to bring up the Quick Draw dialog.
+2. Click on the [Quick Draw toolbar icon](https://raw.githubusercontent.com/geo-data/qgis-quick-draw/master/plugin/icon.png "The Quick Draw icon") to bring up the Quick Draw dialog.
 
 3. Enter and edit your geometries in the text area.
 
@@ -61,7 +61,7 @@ used for the QGIS extents shown in the status bar.
 ### Help
 
 When using the plugin, clicking on the geometry text input box with the QGIS
-**What's this?** help tool will display the geometry editing information from
+**What's This?** help tool will display the geometry editing information from
 the previous section.
 
 ## Installation from Source
