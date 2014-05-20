@@ -30,6 +30,9 @@ import resources_rc
 from quickdrawdialog import QuickDrawDialog
 import os.path
 
+from random import uniform
+from itertools import izip
+
 class QuickDrawError(Exception):
     def __init__(self, message, title):
         super(QuickDrawError, self).__init__(message)
@@ -88,6 +91,7 @@ class QuickDraw:
 
         QObject.connect(self.dlg.clearButton, SIGNAL("clicked()"), self.clearButtonClicked)
         self.dlg.buttonBox.clicked.connect(self.buttonBoxClicked)
+        self.dlg.exampleComboBox.activated.connect(self.exampleSelected)
 
     def unload(self):
         # Remove the plugin menu item and icon
@@ -105,6 +109,41 @@ class QuickDraw:
 
     def clearButtonClicked(self):
         self.dlg.geometryTextEdit.setPlainText('')
+
+    def exampleSelected(self, index):
+        """
+        Create geometry examples based on the current extent
+        """
+        canvas = self.iface.mapCanvas()
+        extent = canvas.extent()
+        minx = extent.xMinimum()
+        miny = extent.yMinimum()
+        maxx = extent.xMaximum()
+        maxy = extent.yMaximum()
+
+        if index == 0:          # bounding box
+            text = "%s,%s : %s,%s" % (minx, miny, maxx, maxy)
+        elif index == 1:        # point
+            x = uniform(minx, maxx)
+            y = uniform(miny, maxy)
+            text = '%s,%s' % (x, y)
+        elif index == 2:        # line
+            x, y = [], []
+            for i in range(3):
+                x.append(uniform(minx, maxx))
+                y.append(uniform(miny, maxy))
+            text = ','.join(('%s,%s' % t for t in izip(sorted(x), y)))
+        else:                   # polygon
+            x, y = [], []
+            for i in range(4):
+                x.append(uniform(minx, maxx))
+                y.append(uniform(miny, maxy))
+            x.sort()
+            x.append(x[0])
+            y.append(y[0])
+            text = ','.join(('%s,%s' % t for t in izip(x, y)))
+
+        self.dlg.geometryTextEdit.appendPlainText(text)
 
     def draw(self, checkZoom = True):
         text = str(self.dlg.geometryTextEdit.toPlainText())
