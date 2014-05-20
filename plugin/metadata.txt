@@ -12,7 +12,7 @@
 name=Quick Draw
 qgisMinimumVersion=2.0
 description=Input simple geometries as text coordinates and display them on the map canvas.
-version=0.2
+version=0.3
 author=Homme Zwaagstra
 email=hrz@geodata.soton.ac.uk
 
@@ -34,7 +34,7 @@ tracker=http://www.github.com/geo-data/qgis-quick-draw/issues
 repository=http://www.github.com/geo-data/qgis-quick-draw
 icon=icon.png
 # experimental flag
-experimental=True
+experimental=False
 
 # deprecated flag (applies to the whole plugin, not just a single version
 deprecated=False
