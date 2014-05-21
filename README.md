@@ -3,6 +3,8 @@
 A [QGIS](http://www.qgis.org) plugin that allows users to input simple
 geometries as text coordinates and display them on the map canvas.
 
+![Quick Draw dialog](https://pbs.twimg.com/media/BoJwgBJCYAA_qKI.png:large "The Quick Draw dialog")
+
 Geometries are entered as coordinate strings and are rendered directly to the
 map canvas.  This makes the plugin suitable for quickly viewing bounding boxes,
 points and lightweight lines and polygons.
