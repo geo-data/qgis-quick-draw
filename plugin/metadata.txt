@@ -27,7 +27,7 @@ email=hrz@geodata.soton.ac.uk
 category=Vector
 
 # tags are comma separated with spaces allowed
-tags=geometry,geometries,point,polygon,polyline,bbox,bounding box,draw,canvas
+tags=geometry,geometries,point,polygon,polyline,bbox,bounding box,draw,canvas,digitizing,digitising
 
 homepage=http://www.github.com/geo-data/qgis-quick-draw
 tracker=http://www.github.com/geo-data/qgis-quick-draw/issues
